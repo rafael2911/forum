@@ -38,7 +38,6 @@ public class AutenticacaoController {
 			
 			// retorna o token
 			String token = tokenService.gerarToken(authentication);
-			System.out.println(token);
 			
 			return ResponseEntity.ok(new TokenDto(token, "Bearer"));
 		}catch (AuthenticationException ex) {
