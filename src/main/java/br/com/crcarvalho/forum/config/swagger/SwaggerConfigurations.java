@@ -1,11 +1,15 @@
 package br.com.crcarvalho.forum.config.swagger;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.crcarvalho.forum.model.Usuario;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -19,7 +23,15 @@ public class SwaggerConfigurations {
 				.apis(RequestHandlerSelectors.basePackage("br.com.crcarvalho.forum"))
 				.paths(PathSelectors.ant("/**"))
 				.build()
-				.ignoredParameterTypes(Usuario.class);
+				.ignoredParameterTypes(Usuario.class)
+				.globalOperationParameters(Arrays.asList(
+						new ParameterBuilder()
+						.name("Authorization")
+						.description("Header para token JWT")
+						.modelRef(new ModelRef("string"))
+						.parameterType("header")
+						.required(false)
+						.build()));
 	}
 	
 }
